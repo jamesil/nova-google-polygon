@@ -1,0 +1,10 @@
+/.idea
+/vendor
+/node_modules
+/build
+composer.phar
+composer.lock
+.phpunit.result.cache
+mix-manifest.json
+.php_cs.cache
+.php-cs-fixer.cache
