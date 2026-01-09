@@ -8,11 +8,16 @@ use Laravel\Nova\Nova;
 
 class FieldServiceProvider extends ServiceProvider
 {
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/nova-google-polygon.php', 'nova-google-polygon');
+    }
+
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config' => config_path(),
+                __DIR__.'/../config/nova-google-polygon.php' => config_path('nova-google-polygon.php'),
             ], 'nova-google-polygon-config');
         }
 

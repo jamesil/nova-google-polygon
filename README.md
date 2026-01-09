@@ -35,6 +35,8 @@ composer require jamesil/nova-google-polygon
 
 ### Configuration
 
+The package merges its default configuration automatically. You only need to publish the config file if you want to customize the defaults.
+
 1. **Publish the configuration file** (optional):
 
 ```bash
