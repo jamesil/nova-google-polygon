@@ -4,6 +4,17 @@ All notable changes to `nova-google-polygon` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+
+### Added
+- Support for Laravel 12
+- Support for Laravel 13 when used with Laravel Nova 5.8.0 or newer
+
+### Changed
+- Expanded Composer compatibility to allow `illuminate/support` 12.x and 13.x
+- Updated CI coverage to test explicit Laravel and Nova compatibility combinations
+- Updated the compatibility documentation to clarify the Nova 5.8.0+ requirement for Laravel 13
+
 ## 1.0.0 - 2024
 
 ### Added
