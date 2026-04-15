@@ -9,13 +9,6 @@
     height: 500px;
     width: 100%;
 }
-
-.nova-google-polygon-map a[href^="http://maps.google.com/maps"],
-.nova-google-polygon-map a[href^="https://maps.google.com/maps"],
-.nova-google-polygon-map a[href^="https://www.google.com/maps"],
-.nova-google-polygon-map .gm-style-cc {
-    display: none !important;
-}
 </style>
 
 <script>
