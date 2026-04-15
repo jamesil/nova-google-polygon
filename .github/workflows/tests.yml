@@ -7,45 +7,62 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    name: Validate package metadata
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+
+      - name: Validate composer manifest
+        run: composer validate --strict
+
+      - name: Lint PHP sources
+        run: find src tests -name '*.php' -print0 | xargs -0 -n 1 php -l
+
   test:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - php: "8.1"
-            laravel: "^9.0"
-            nova: "^4.0"
-            dependency-version: prefer-lowest
-          - php: "8.2"
-            laravel: "^11.0"
-            nova: "^4.0"
-            dependency-version: prefer-stable
-          - php: "8.1"
-            laravel: "^10.0"
-            nova: "^5.0"
-            dependency-version: prefer-lowest
-          - php: "8.3"
-            laravel: "^11.0"
-            nova: "^5.0"
-            dependency-version: prefer-stable
           - php: "8.2"
             laravel: "^12.0"
             nova: "^5.0"
             dependency-version: prefer-lowest
-          - php: "8.4"
+            pest: "3.8.6"
+            phpunit: "11.5.50"
+            collision: "8.9.1"
+          - php: "8.2"
             laravel: "^12.0"
             nova: "^5.0"
             dependency-version: prefer-stable
+            pest: "3.8.6"
+            phpunit: "11.5.50"
+            collision: "8.9.1"
           - php: "8.3"
             laravel: "^13.0"
             nova: "^5.8"
             dependency-version: prefer-lowest
+            pest: "3.8.6"
+            phpunit: "11.5.50"
+            collision: "8.9.1"
           - php: "8.4"
             laravel: "^13.0"
             nova: "^5.8"
             dependency-version: prefer-stable
+            pest: "3.8.6"
+            phpunit: "11.5.50"
+            collision: "8.9.1"
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - N${{ matrix.nova }} - ${{ matrix.dependency-version }}
 
@@ -57,19 +74,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          key: dependencies-php-${{ matrix.php }}-laravel-${{ matrix.laravel }}-nova-${{ matrix.nova }}-pest-${{ matrix.pest }}-phpunit-${{ matrix.phpunit }}-collision-${{ matrix.collision }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          tools: composer:v2
           coverage: none
 
       - name: Install dependencies
         run: |
           composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
           composer require "laravel/framework:${{ matrix.laravel }}" "laravel/nova:${{ matrix.nova }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+          composer require --dev "pestphp/pest:${{ matrix.pest }}" "phpunit/phpunit:${{ matrix.phpunit }}" "nunomaduro/collision:${{ matrix.collision }}" --no-interaction --no-update
+          composer update --with-all-dependencies --${{ matrix.dependency-version }} --prefer-dist --no-interaction
       - name: Execute tests
         run: vendor/bin/pest

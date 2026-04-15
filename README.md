@@ -13,20 +13,22 @@ A Laravel Nova field for creating and editing polygons on Google Maps.
 
 ## Requirements
 
-- PHP 8.1 or higher for the package itself
-- Laravel Nova 4.0 or 5.0+
-- Laravel 9.0 or higher
+- PHP 8.2 or higher for the upcoming 2.x line
+- Laravel Nova 5.0+
+- Laravel 12.0 or higher
 - Google Maps API key with Maps JavaScript API enabled
 
-Laravel 12 requires PHP 8.2+, and Laravel 13 requires PHP 8.3+ plus Laravel Nova 5.8.0 or newer.
+Laravel 13 requires PHP 8.3+ plus Laravel Nova 5.8.0 or newer.
 
 ## Version Compatibility
 
-| Laravel Nova | Laravel      | PHP                      | Package Version |
-|--------------|--------------|--------------------------|-----------------|
-| 4.x          | 9.x - 11.x   | See Laravel/Nova stack   | 1.x             |
-| 5.0 - 5.7    | 10.x - 12.x  | See Laravel/Nova stack   | 1.x             |
-| 5.8+         | 10.x - 13.x  | See Laravel/Nova stack   | 1.x             |
+| Package Version | Laravel      | Laravel Nova | PHP         |
+|-----------------|--------------|--------------|-------------|
+| 1.x             | 9.x - 11.x   | 4.x or 5.x   | 8.1+        |
+| 2.x             | 12.x         | 5.0+         | 8.2+        |
+| 2.x             | 13.x         | 5.8+         | 8.3+        |
+
+The `main` branch tracks the upcoming 2.x release line. The `1.x` line remains the maintenance line for Laravel 9 through 11 users.
 
 Laravel 13 support was added by Nova in version 5.8.0, so do not use earlier Nova 5 releases on Laravel 13.
 
@@ -35,8 +37,16 @@ Laravel 13 support was added by Nova in version 5.8.0, so do not use earlier Nov
 Install the package via Composer:
 
 ```bash
-composer require jamesil/nova-google-polygon
+composer require jamesil/nova-google-polygon:^2.0
 ```
+
+Use that constraint once the 2.0.0 release line is tagged. If you need the legacy compatibility line instead:
+
+```bash
+composer require jamesil/nova-google-polygon:^1.0
+```
+
+Use `^1.0` for Laravel 9 to 11 projects. Use `^2.0` for Laravel 12 and 13 projects.
 
 ### Configuration
 
@@ -168,6 +178,7 @@ class PickupZone extends Resource
         ];
     }
 }
+```
 
 // Model
 use Jamesil\NovaGooglePolygon\Casts\AsPolygon;
