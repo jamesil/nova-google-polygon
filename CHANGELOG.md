@@ -6,8 +6,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## Unreleased
 
+## 2.0.0 - 2026-04-15
+
 ### Changed
-- `main` now tracks the upcoming 2.0.0 release line for Laravel 12 and 13
+- `main` now tracks the 2.x release line for Laravel 12 and 13
 - Laravel 9 to 11 maintenance moves to the `1.x` branch
 - CI now uses a Laravel 12/13-specific Pest toolchain and skips secret-dependent test jobs for forked pull requests
 

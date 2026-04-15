@@ -13,7 +13,7 @@ A Laravel Nova field for creating and editing polygons on Google Maps.
 
 ## Requirements
 
-- PHP 8.2 or higher for the upcoming 2.x line
+- PHP 8.2 or higher for the 2.x line
 - Laravel Nova 5.0+
 - Laravel 12.0 or higher
 - Google Maps API key with Maps JavaScript API enabled
@@ -28,7 +28,7 @@ Laravel 13 requires PHP 8.3+ plus Laravel Nova 5.8.0 or newer.
 | 2.x             | 12.x         | 5.0+         | 8.2+        |
 | 2.x             | 13.x         | 5.8+         | 8.3+        |
 
-The `main` branch tracks the upcoming 2.x release line. The `1.x` line remains the maintenance line for Laravel 9 through 11 users.
+The `main` branch tracks the 2.x release line. The `1.x` line remains the maintenance line for Laravel 9 through 11 users.
 
 Laravel 13 support was added by Nova in version 5.8.0, so do not use earlier Nova 5 releases on Laravel 13.
 
@@ -40,7 +40,7 @@ Install the package via Composer:
 composer require jamesil/nova-google-polygon:^2.0
 ```
 
-Use that constraint once the 2.0.0 release line is tagged. If you need the legacy compatibility line instead:
+If you need the legacy compatibility line instead:
 
 ```bash
 composer require jamesil/nova-google-polygon:^1.0
