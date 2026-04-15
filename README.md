@@ -178,7 +178,6 @@ class PickupZone extends Resource
         ];
     }
 }
-```
 
 // Model
 use Jamesil\NovaGooglePolygon\Casts\AsPolygon;
