@@ -4,8 +4,8 @@ namespace Jamesil\NovaGooglePolygon\Support;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 use Jamesil\NovaGooglePolygon\Exceptions\InvalidPoint;
+use JsonSerializable;
 
 final class Point implements Arrayable, Jsonable, JsonSerializable
 {
