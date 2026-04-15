@@ -1,5 +1,10 @@
 # Nova Google Polygon Field
 
+[![Tests](https://github.com/jamesil/nova-google-polygon/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/jamesil/nova-google-polygon/actions/workflows/tests.yml)
+[![Check & fix styling](https://github.com/jamesil/nova-google-polygon/actions/workflows/styling.yml/badge.svg?branch=main)](https://github.com/jamesil/nova-google-polygon/actions/workflows/styling.yml)
+[![Latest Stable Version](https://img.shields.io/packagist/v/jamesil/nova-google-polygon?label=Packagist)](https://packagist.org/packages/jamesil/nova-google-polygon)
+[![Total Downloads](https://img.shields.io/packagist/dt/jamesil/nova-google-polygon)](https://packagist.org/packages/jamesil/nova-google-polygon)
+
 A Laravel Nova field for creating and editing polygons on Google Maps.
 
 ## Features
