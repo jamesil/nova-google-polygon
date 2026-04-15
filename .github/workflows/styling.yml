@@ -2,6 +2,9 @@ name: Check & fix styling
 
 on: [ push ]
 
+permissions:
+  contents: write
+
 jobs:
   styling:
     runs-on: ubuntu-latest
@@ -10,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.ref_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,9 +33,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           tools: composer:v2
           coverage: none
+
+      - name: Configure Composer auth for Nova
+        run: composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
 
       - name: Install composer dependencies
         run: composer install --no-interaction --no-progress
@@ -40,7 +46,16 @@ jobs:
       - name: Run PHP CS Fixer
         run: composer format
 
+      - name: Detect formatting changes
+        id: formatting_changes
+        run: |
+          if ! git diff --quiet; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Commit changes
+        if: steps.formatting_changes.outputs.has_changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          branch: ${{ github.ref_name }}
           commit_message: "style: reformat"
