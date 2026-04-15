@@ -16,7 +16,7 @@ import loadGoogleMapsApi from 'load-google-maps-api';
 
 export default {
     props: ['value', 'center', 'shapeOptions', 'readonly'],
-    data: function() {
+    data: function () {
         return {
             ready: false,
             map: null,
@@ -32,7 +32,7 @@ export default {
             // Hide drawing manager
             this.drawingManager.setMap(null);
 
-            this.shape.addListener('rightclick', e => {
+            this.shape.addListener('rightclick', (e) => {
                 if (e.vertex != null) {
                     this.shape.getPath().removeAt(e.vertex);
                 }
@@ -47,7 +47,7 @@ export default {
                 }
             });
 
-            this.shape.getPaths().forEach(path => {
+            this.shape.getPaths().forEach((path) => {
                 google.maps.event.addListener(path, 'insert_at', () => this.syncValue());
                 google.maps.event.addListener(path, 'remove_at', () => this.syncValue());
                 google.maps.event.addListener(path, 'set_at', () => this.syncValue());
@@ -157,7 +157,7 @@ export default {
             polygonOptions: this.shapeOptions,
         });
 
-        google.maps.event.addListener(this.drawingManager, 'overlaycomplete', event => {
+        google.maps.event.addListener(this.drawingManager, 'overlaycomplete', (event) => {
             this.shape = event.overlay;
             this.watchShape();
             this.syncValue();
