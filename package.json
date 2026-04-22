@@ -14,7 +14,7 @@
         "lint": "eslint resources/js --fix --ext js,vue"
     },
     "devDependencies": {
-        "@vue/compiler-sfc": "^3.5.32",
+        "@vue/compiler-sfc": "^3.5.33",
         "eslint": "^4.19.1",
         "eslint-config-prettier": "^6.15.0",
         "eslint-plugin-vue": "^4.4.0",
