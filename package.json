@@ -22,7 +22,7 @@
         "path": "^0.12.7",
         "postcss": "^8.5.13",
         "prettier": "^3.8.3",
-        "vue-loader": "^16.8.3"
+        "vue-loader": "^17.4.2"
     },
     "dependencies": {
         "load-google-maps-api": "^2.0.2"
