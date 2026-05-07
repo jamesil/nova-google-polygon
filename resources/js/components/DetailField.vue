@@ -1,16 +1,21 @@
 <template>
     <PanelItem :index="index" :field="field">
         <template #value>
-            <Map :center="center" :shape-options="shapeOptions" :readonly="true" :value="value" />
+            <PolygonMap
+                :center="center"
+                :shape-options="shapeOptions"
+                :readonly="true"
+                :value="value"
+            />
         </template>
     </PanelItem>
 </template>
 
 <script>
-import Map from './Map';
+import PolygonMap from './Map';
 
 export default {
-    components: { Map },
+    components: { PolygonMap },
     props: ['index', 'field'],
     computed: {
         value() {

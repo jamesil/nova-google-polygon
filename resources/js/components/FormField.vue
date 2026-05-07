@@ -1,7 +1,7 @@
 <template>
     <DefaultField :field="field" :errors="errors" :show-help-text="showHelpText">
         <template #field>
-            <Map
+            <PolygonMap
                 :center="center"
                 :shape-options="shapeOptions"
                 :readonly="isReadonly"
@@ -14,10 +14,10 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import Map from './Map';
+import PolygonMap from './Map';
 
 export default {
-    components: { Map },
+    components: { PolygonMap },
     mixins: [FormField, HandlesValidationErrors],
     props: ['field', 'showHelpText'],
     data: () => ({
