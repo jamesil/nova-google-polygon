@@ -15,6 +15,7 @@
 import loadGoogleMapsApi from 'load-google-maps-api';
 
 export default {
+    name: 'PolygonMap',
     props: ['value', 'center', 'shapeOptions', 'readonly'],
     data: function () {
         return {
