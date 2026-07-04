@@ -2,6 +2,9 @@
 
 A Laravel Nova field for creating and editing polygons on Google Maps.
 
+> [!WARNING]
+> **Versions up to and including 1.1.0 (and 2.0.1 on the 2.x line) no longer work.** Google removed the Maps JavaScript API drawing library in May 2026, which those versions relied on for polygon drawing. Upgrade to **1.2.0** (Laravel 9–11) or **2.1.0** (Laravel 12/13), which use [Terra Draw](https://terradraw.io) instead.
+
 ## Features
 
 - Interactive polygon drawing and editing on Google Maps
@@ -82,6 +85,23 @@ class Location extends Resource
     }
 }
 ```
+
+### Drawing and editing
+
+On a form with no polygon yet, the map is in drawing mode:
+
+- **Click** on the map to place each vertex.
+- **Finish** the shape by clicking the first (or last) placed point, or by pressing **Enter**.
+- **Escape** cancels an in-progress shape.
+
+Once a polygon exists it switches to editing mode:
+
+- **Drag a vertex** to move it.
+- **Click a midpoint** (the smaller handle between two vertices) to insert a new vertex.
+- **Right-click a vertex** to remove it — a polygon always keeps at least 3 vertices.
+- **Clear shape** (button on the map) removes the polygon so you can draw a new one.
+
+If the handles disappear after clicking elsewhere on the map, click the polygon to select it again. Touch devices are supported: tap to place vertices and drag handles to edit.
 
 ### Database Setup
 
