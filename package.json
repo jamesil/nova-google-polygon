@@ -11,7 +11,8 @@
         "nova:install": "npm --prefix='./vendor/laravel/nova' ci",
         "check-format": "prettier --list-different 'resources/**/*.{css,js,vue}'",
         "format": "prettier --write 'resources/js/**/*.{css,js,vue}'",
-        "lint": "eslint 'resources/js/**/*.{js,vue}' --fix"
+        "lint": "eslint 'resources/js/**/*.{js,vue}' --fix",
+        "test:js": "vitest run"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -24,13 +25,16 @@
         "path": "^0.12.7",
         "postcss": "^8.5.14",
         "prettier": "^3.8.3",
+        "vitest": "^4.1.9",
         "vue-eslint-parser": "^10.4.0",
         "vue-loader": "^17.4.2"
     },
-    "dependencies": {
-        "load-google-maps-api": "^2.0.2"
-    },
     "overrides": {
         "webpack": "5.104.1"
+    },
+    "dependencies": {
+        "@googlemaps/js-api-loader": "^2.1.1",
+        "terra-draw": "^1.31.2",
+        "terra-draw-google-maps-adapter": "^1.6.1"
     }
 }
