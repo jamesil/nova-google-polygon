@@ -109,6 +109,13 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
     }
 
     /**
+     * Determine whether the given point lies inside the polygon.
+     *
+     * Uses the even–odd (ray casting) rule, casting a ray along increasing
+     * longitude and counting edge crossings. A point exactly on a vertex is
+     * treated as inside; a point lying exactly on an edge follows the
+     * standard half-open convention of the ray-casting rule.
+     *
      * @throws InvalidPoint
      */
     public function contain(Point|array $point): bool
@@ -117,40 +124,36 @@ final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
             $point = Point::fromArray($point);
         }
 
+        $n = count($this->points);
+
+        // A polygon needs at least three vertices to enclose any area.
+        if ($n < 3) {
+            return false;
+        }
+
         if ($this->pointOnVertex($point)) {
             return true;
         }
 
-        $intersections = 0;
-        $pointA = $this->points[0];
-        $n = count($this->points);
-        for ($i = 1; $i <= $n; $i++) {
-            $pointB = $this->points[$i % $n];
+        $inside = false;
+        $lat = $point->lat;
+        $lng = $point->lng;
+
+        for ($i = 0, $j = $n - 1; $i < $n; $j = $i++) {
+            $iLat = $this->points[$i]->lat;
+            $iLng = $this->points[$i]->lng;
+            $jLat = $this->points[$j]->lat;
+            $jLng = $this->points[$j]->lng;
 
             if (
-                $point->lng >= min($pointA->lng, $pointB->lng)
-                && $point->lng <= max($pointA->lng, $pointB->lng)
-                && $point->lat <= max($pointA->lat, $pointB->lat)
-                && $pointA->lng != $pointB->lng) {
-                $xinters = ($point->lng - $pointA->lng) * ($pointB->lat - $pointA->lat) / ($pointB->lng - $pointA->lng) + $pointA->lat;
-                $pLat = (string)$point->lat;
-                $p1Lat = (string)$pointA->lat;
-                $p2Lat = (string)$pointB->lat;
-                $xintersStr = (string)$xinters;
-                if (($pointA->lat == $pointB->lat) ||
-                    ($point->lat <= $xinters) ||
-                    (bccomp("$p1Lat", "$p2Lat", 14) == 0) ||
-                    (bccomp("$pLat", "$xintersStr", 14) == 0) || // pLat == $xinters
-                    (bccomp("$pLat", "$xintersStr", 14) == -1)   // pLat < $xinters
-                ) {
-                    $intersections++;
-                }
+                ($iLat > $lat) !== ($jLat > $lat)
+                && $lng < ($jLng - $iLng) * ($lat - $iLat) / ($jLat - $iLat) + $iLng
+            ) {
+                $inside = ! $inside;
             }
-
-            $pointA = $pointB;
         }
 
-        return $intersections % 2 != 0;
+        return $inside;
     }
 
     /**
