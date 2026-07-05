@@ -1,32 +1,43 @@
-name: Check & fix styling
+name: Check styling
 
 on: [ push ]
 
 jobs:
   styling:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          ref: ${{ github.head_ref }}
+          node-version: '22'
+          cache: 'npm'
 
       - name: Install packages
         run: npm ci
 
-      - name: Prettier
-        run: npm run format
+      - name: Check Prettier formatting
+        run: npx prettier --check 'resources/**/*.{css,js,vue}'
 
       - name: Lint
-        run: npm run lint
+        run: npx eslint 'resources/js/**/*.{js,vue}'
 
-      - name: Run PHP CS Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          args: --allow-risky=yes
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "style: reformat"
+      - name: Configure Composer auth for Nova
+        run: composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Check PHP CS Fixer
+        run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff --allow-risky=yes

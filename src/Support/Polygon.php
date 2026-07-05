@@ -5,9 +5,9 @@ namespace Jamesil\NovaGooglePolygon\Support;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 use Jamesil\NovaGooglePolygon\Casts\AsPolygon;
 use Jamesil\NovaGooglePolygon\Exceptions\InvalidPoint;
+use JsonSerializable;
 
 final class Polygon implements Arrayable, Castable, Jsonable, JsonSerializable
 {
