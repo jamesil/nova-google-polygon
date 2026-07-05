@@ -4,6 +4,22 @@ All notable changes to `nova-google-polygon` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## V2.1.1 - 2026-07-05
+
+### Fixed
+
+- `Polygon::contain()` now uses a standard even-odd ray-casting test. The previous implementation returned wrong results whenever the queried point shared a longitude with a polygon vertex, and threw a `ValueError` for coordinates near the equator (from feeding scientific-notation strings to `bccomp`). Points on a vertex are inside; edges follow a documented half-open convention (minimum-latitude and minimum-longitude edges inclusive).
+- `Polygon::contain()` no longer errors on empty or degenerate (fewer than three vertices) polygons — it returns `false`.
+
+### Changed
+
+- Removed the `ext-bcmath` requirement; the corrected algorithm does not need it.
+
+
+---
+
+Verified against an exact-integer point-in-polygon oracle (8M+ comparisons across 155k convex/concave/self-intersecting polygons, zero mismatches) and an independent float reference across equator/meridian/extreme-magnitude regimes. No API change — upgrade with `composer update jamesil/nova-google-polygon`. Laravel 9–11 users on the `1.x` line: **1.2.1**.
+
 ## Unreleased
 
 ### Fixed
@@ -35,6 +51,7 @@ Existing stored polygons (`{lat, lng}` JSON) load and save unchanged — no data
 
 ```bash
 composer require jamesil/nova-google-polygon:^2.1
+
 
 ```
 Laravel 9–11 users on the `1.x` line: upgrade to **1.2.0**.
