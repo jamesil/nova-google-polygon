@@ -4,6 +4,30 @@ All notable changes to `nova-google-polygon` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## V2.1.0 - 2026-07-05
+
+### Fixed
+
+- Polygon drawing was broken by Google's removal of the Maps JavaScript API drawing library (deprecated August 2025, removed May 2026). Drawing and editing now use [Terra Draw](https://terradraw.io), the ecosystem-endorsed successor. **Versions up to and including 2.0.1 no longer work on default Maps API channels — upgrade to 2.1.0.**
+- Fields marked `->readonly()` no longer render an editable polygon.
+
+### Changed
+
+- New drawing interactions: click to place vertices; finish by clicking the first or last placed point, or by pressing Enter; Escape cancels an in-progress shape. Drag vertices to move them, click a midpoint to insert a vertex, right-click a vertex to remove it (a polygon keeps at least 3 vertices), and use the new "Clear shape" map button to start over. Touch devices are now supported.
+- Replaced the abandoned `load-google-maps-api` loader with `@googlemaps/js-api-loader`.
+- The unused `places` and `geometry` Maps libraries are no longer requested.
+- A missing API key or a failed Maps API load now shows a visible message in the field instead of an empty map area.
+
+### Upgrade
+
+Existing stored polygons (`{lat, lng}` JSON) load and save unchanged — no data migration needed.
+
+```bash
+composer require jamesil/nova-google-polygon:^2.1
+
+```
+Laravel 9–11 users on the `1.x` line: upgrade to **1.2.0**.
+
 ## Unreleased
 
 ### Fixed
