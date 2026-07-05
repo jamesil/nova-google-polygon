@@ -25,6 +25,8 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
-        "load-google-maps-api": "^2.0.2"
+        "@googlemaps/js-api-loader": "^2.1.0",
+        "terra-draw": "^1.31.0",
+        "terra-draw-google-maps-adapter": "^1.6.0"
     }
 }
