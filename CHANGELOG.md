@@ -15,22 +15,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 - Removed the `ext-bcmath` requirement; the corrected algorithm does not need it.
 
-
----
-
-Verified against an exact-integer point-in-polygon oracle (8M+ comparisons across 155k convex/concave/self-intersecting polygons, zero mismatches) and an independent float reference across equator/meridian/extreme-magnitude regimes. No API change — upgrade with `composer update jamesil/nova-google-polygon`. Laravel 9–11 users on the `1.x` line: **1.2.1**.
-
-## Unreleased
-
-### Fixed
-
-- `Polygon::contain()` now uses a standard even-odd ray-casting test. The previous implementation returned wrong results whenever the queried point shared a longitude with a polygon vertex, and threw a `ValueError` for coordinates near the equator (from feeding scientific-notation strings to `bccomp`). Points on a vertex are inside; edges follow a documented half-open convention.
-- `Polygon::contain()` no longer errors on empty or degenerate (fewer than three vertices) polygons — it returns `false`.
-
-### Changed
-
-- Removed the `ext-bcmath` requirement; the corrected algorithm does not need it.
-
 ## V2.1.0 - 2026-07-05
 
 ### Fixed
@@ -51,24 +35,9 @@ Existing stored polygons (`{lat, lng}` JSON) load and save unchanged — no data
 
 ```bash
 composer require jamesil/nova-google-polygon:^2.1
-
-
 ```
+
 Laravel 9–11 users on the `1.x` line: upgrade to **1.2.0**.
-
-## Unreleased
-
-### Fixed
-
-- Polygon drawing was broken by Google's removal of the Maps JavaScript API drawing library (deprecated August 2025, removed May 2026). Drawing and editing now use [Terra Draw](https://terradraw.io), the ecosystem-endorsed successor. Versions up to and including 2.0.1 no longer work on default Maps API channels.
-- Fields marked `->readonly()` no longer render an editable polygon.
-
-### Changed
-
-- New drawing interactions: click to place vertices; finish by clicking the first or last placed point, or by pressing Enter; Escape cancels an in-progress shape. Drag vertices to move them, click a midpoint to insert a vertex, right-click a vertex to remove it (a polygon keeps at least 3 vertices), and use the new "Clear shape" map button to start over. Touch devices are now supported.
-- Replaced the abandoned `load-google-maps-api` loader with `@googlemaps/js-api-loader`.
-- The unused `places` and `geometry` Maps libraries are no longer requested.
-- A missing API key or a failed Maps API load now shows a visible message in the field instead of an empty map area.
 
 ## V2.0.1 - 2026-04-15
 
