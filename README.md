@@ -246,7 +246,7 @@ class PickupZone extends Model
 
 ### Polygon Class Methods
 
-- `contain(Point|array $point)`: Check if a point is inside the polygon
+- `contain(Point|array $point)`: Check if a point is inside the polygon (even-odd ray casting). A point on a vertex counts as inside; points exactly on an edge follow a half-open convention (the minimum-latitude and minimum-longitude edges are inclusive, the opposite edges exclusive)
 - `pointOnVertex(Point|array $point)`: Check if a point is on a polygon vertex
 - `getBoundingBox()`: Get the bounding box coordinates
 - `getMinLatitude()`, `getMaxLatitude()`: Get latitude bounds

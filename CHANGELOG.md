@@ -4,6 +4,17 @@ All notable changes to `nova-google-polygon` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+
+### Fixed
+
+- `Polygon::contain()` now uses a standard even-odd ray-casting test. The previous implementation returned wrong results whenever the queried point shared a longitude with a polygon vertex, and threw a `ValueError` for coordinates near the equator (from feeding scientific-notation strings to `bccomp`). Points on a vertex are inside; edges follow a documented half-open convention.
+- `Polygon::contain()` no longer errors on empty or degenerate (fewer than three vertices) polygons — it returns `false`.
+
+### Changed
+
+- Removed the `ext-bcmath` requirement; the corrected algorithm does not need it.
+
 ## V2.1.0 - 2026-07-05
 
 ### Fixed
