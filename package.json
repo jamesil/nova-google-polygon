@@ -20,7 +20,7 @@
         "eslint": "^10.3.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-vue": "^10.9.1",
-        "globals": "^17.6.0",
+        "globals": "^17.8.0",
         "laravel-mix": "^6.0.41",
         "path": "^0.12.7",
         "postcss": "^8.5.14",
