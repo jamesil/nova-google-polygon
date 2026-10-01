@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^2.1.1",
-        "terra-draw": "^1.31.2",
+        "terra-draw": "^1.35.0",
         "terra-draw-google-maps-adapter": "^1.6.1"
     }
 }
